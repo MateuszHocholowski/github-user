@@ -19,13 +19,13 @@ public class Controller {
         this.responseService = responseService;
     }
 
-    @GetMapping("/{user}")
+    @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     public Response getResponse(@RequestParam String user) {
         try {
             return responseService.getResponse(user);
         } catch (HttpClientErrorException exception) {
-            throw new ResourceNotFoundException("user not found");
+            throw new ResourceNotFoundException(user + " doesn't exist in database");
         }
     }
 }
