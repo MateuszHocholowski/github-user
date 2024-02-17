@@ -62,7 +62,7 @@ class ControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.repositories",hasSize(1)))
                 .andExpect(jsonPath("$.repositories[*].repository_name")
-                        .value(containsInAnyOrder(expectedRepositoriesNames)))
+                        .value(containsInAnyOrder(expectedRepositoriesNames.toArray())))
                 .andExpect(jsonPath("$.repositories[0].owner",equalTo(OWNER_LOGIN)));
     }
 
