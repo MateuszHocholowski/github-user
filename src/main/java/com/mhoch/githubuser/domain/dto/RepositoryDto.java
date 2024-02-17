@@ -1,11 +1,13 @@
 package com.mhoch.githubuser.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 import lombok.Value;
 
 import java.util.Date;
 
 @Value
+@Builder
 public class RepositoryDto {
 
     long id;

@@ -25,7 +25,7 @@ public class Controller {
         try {
             return responseService.getResponse(user);
         } catch (HttpClientErrorException exception) {
-            throw new ResourceNotFoundException(user + " doesn't exist in database");
+            throw new ResourceNotFoundException("User: " + user + " doesn't exist in database");
         }
     }
 }
