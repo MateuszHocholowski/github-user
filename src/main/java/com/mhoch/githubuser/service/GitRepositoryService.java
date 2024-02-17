@@ -3,8 +3,6 @@ package com.mhoch.githubuser.service;
 import com.mhoch.githubuser.domain.dto.BranchDto;
 import com.mhoch.githubuser.domain.dto.RepositoryDto;
 
-import lombok.AccessLevel;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +17,6 @@ import java.util.List;
 @Service
 public class GitRepositoryService {
 
-    @Getter(AccessLevel.PACKAGE)
     private final RestTemplate restTemplate;
     @Value("${service.url}")
     private String serviceUrl;
@@ -28,7 +25,8 @@ public class GitRepositoryService {
         this.restTemplate = restTemplate;
     }
     public List<RepositoryDto> fetchUserRepositories(String userLogin) {
-        RepositoryDto[] repositoryDtos = restTemplate.getForObject(serviceUrl + "users/" + userLogin + "/repos", RepositoryDto[].class);
+        RepositoryDto[] repositoryDtos = restTemplate
+                .getForObject(serviceUrl + "users/" + userLogin + "/repos", RepositoryDto[].class);
         if (repositoryDtos == null) {
             return new ArrayList<>();
         }
