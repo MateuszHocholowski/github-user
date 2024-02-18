@@ -5,9 +5,6 @@ import com.mhoch.githubuser.domain.dto.RepositoryDto;
 
 import com.mhoch.githubuser.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -23,7 +20,7 @@ public class GitRepositoryService {
     @Value("${service.url}")
     private String serviceUrl;
 
-    public GitRepositoryService(@Lazy RestTemplate restTemplate) {
+    public GitRepositoryService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
     public List<RepositoryDto> fetchUserRepositories(String userLogin) {
@@ -46,10 +43,5 @@ public class GitRepositoryService {
             return new ArrayList<>();
         }
         return Arrays.stream(branchDtos).toList();
-    }
-
-    @Bean
-    public RestTemplate restTemplate(RestTemplateBuilder builder) {
-        return builder.build();
     }
 }
