@@ -54,6 +54,7 @@ public class ApplicationE2ETest {
     private static final String EMPTY_REPOSITORY = "emptyRepository";
     private static final String FORKED_REPOSITORY = "forkedRepository";
     private static final String EMPTY_BRANCH_URL = "/emptyBranchUrl";
+
     private MockRestServiceServer mockServer;
     private final ObjectWriter writer = new ObjectMapper().writer().withDefaultPrettyPrinter();
     private MockMvc mockMvc;
@@ -90,6 +91,7 @@ public class ApplicationE2ETest {
 
         RepositoryDto repositoryDto1 = RepositoryDto.builder().name(REPOSITORY_NAME)
                 .owner(ownerDto).branchesUrl(BRANCH_URL).isFork(false).build();
+
         RepositoryDto repositoryDto2 = RepositoryDto.builder().name(REPOSITORY_NAME2)
                 .owner(ownerDto).branchesUrl(BRANCH_URL).isFork(false).build();
 
@@ -182,6 +184,7 @@ public class ApplicationE2ETest {
 
         RepositoryDto repositoryDto1 = RepositoryDto.builder().name(REPOSITORY_NAME)
                 .owner(ownerDto).branchesUrl(BRANCH_URL).isFork(false).build();
+
         RepositoryDto repositoryDto2 = RepositoryDto.builder().name(FORKED_REPOSITORY)
                 .owner(ownerDto).branchesUrl(BRANCH_URL).isFork(true).build();
 

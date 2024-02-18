@@ -31,12 +31,13 @@ class UserRepositoriesControllerTest {
     private static final String REPOSITORY_NAME = "repositoryName";
     private static final String OWNER_LOGIN = "ownerLogin";
     private static final String ERROR_MESSAGE = "errorMessage";
+
     @Mock
     UserRepositoriesService userRepositoriesService;
     @InjectMocks
     UserRepositoriesController controller;
-
     MockMvc mockMvc;
+
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();

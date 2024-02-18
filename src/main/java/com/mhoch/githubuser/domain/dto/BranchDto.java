@@ -6,6 +6,8 @@ import lombok.Value;
 @Builder
 @Value
 public class BranchDto {
+
     String name;
+
     CommitDto commit;
 }

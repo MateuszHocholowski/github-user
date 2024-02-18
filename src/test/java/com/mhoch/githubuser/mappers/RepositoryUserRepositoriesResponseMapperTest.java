@@ -38,14 +38,18 @@ class RepositoryUserRepositoriesResponseMapperTest {
                 .owner(ownerDto).build();
         //when
         RepositoryResponse repositoryResponse = mapToRepositoryResponse(repositoryDto,List.of(branchDto));
+
         List<String> repositoryResponseBranchesNames = repositoryResponse.getBranches().stream()
                 .map(BranchResponse::getBranchName).toList();
+
         List<String> repositoryResponseBranchesLastCommitSha = repositoryResponse.getBranches().stream()
                 .map(BranchResponse::getLastCommitSha).toList();
         //then
         assertEquals(REPOSITORY_NAME, repositoryResponse.getRepositoryName());
         assertEquals(OWNER_LOGIN, repositoryResponse.getOwnerLogin());
+
         assertThat(repositoryResponseBranchesNames).containsExactlyInAnyOrderElementsOf(expectedBranchesNames);
+
         assertThat(repositoryResponseBranchesLastCommitSha)
                 .containsExactlyInAnyOrderElementsOf(expectedBranchesLastCommitSha);
     }

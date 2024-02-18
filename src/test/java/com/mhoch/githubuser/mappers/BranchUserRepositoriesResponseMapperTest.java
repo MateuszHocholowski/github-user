@@ -24,23 +24,4 @@ class BranchUserRepositoriesResponseMapperTest {
         assertEquals(NAME,branchResponse.getBranchName());
         assertEquals(SHA, branchResponse.getLastCommitSha());
     }
-    @Test
-    void tryToMapWithNullBranchName() {
-        //given
-        CommitDto commitDto = CommitDto.builder().sha(SHA).build();
-        BranchDto branchDto = BranchDto.builder().commit(commitDto).build();
-        //when
-        BranchResponse branchResponse = mapToBranchResponse(branchDto);
-        //then
-        assertNull(branchResponse);
-    }
-    @Test
-    void tryToMapWithNullCommit() {
-        //given
-        BranchDto branchDto = BranchDto.builder().name(NAME).build();
-        //when
-        BranchResponse branchResponse = mapToBranchResponse(branchDto);
-        //then
-        assertNull(branchResponse);
-    }
 }

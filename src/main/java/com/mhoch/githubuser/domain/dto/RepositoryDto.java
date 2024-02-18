@@ -17,5 +17,4 @@ public class RepositoryDto {
 
     @JsonProperty("branches_url")
     String branchesUrl;
-
 }
