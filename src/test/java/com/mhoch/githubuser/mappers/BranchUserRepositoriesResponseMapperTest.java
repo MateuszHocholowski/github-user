@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import static com.mhoch.githubuser.mappers.BranchResponseMapper.mapToBranchResponse;
 import static org.junit.jupiter.api.Assertions.*;
 
-class BranchResponseMapperTest {
+class BranchUserRepositoriesResponseMapperTest {
 
     private static final String SHA = "testSha";
     private static final String NAME = "testName";

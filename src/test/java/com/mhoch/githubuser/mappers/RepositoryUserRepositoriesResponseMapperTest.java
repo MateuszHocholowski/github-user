@@ -15,7 +15,7 @@ import static com.mhoch.githubuser.mappers.RepositoryResponseMapper.mapToReposit
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-class RepositoryResponseMapperTest {
+class RepositoryUserRepositoriesResponseMapperTest {
 
     private static final String OWNER_LOGIN = "ownerLogin";
     private static final String REPOSITORY_NAME = "repositoryName";

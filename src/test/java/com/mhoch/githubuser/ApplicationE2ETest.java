@@ -2,14 +2,14 @@ package com.mhoch.githubuser;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.mhoch.githubuser.controller.Controller;
+import com.mhoch.githubuser.controller.UserRepositoriesController;
 import com.mhoch.githubuser.domain.dto.BranchDto;
 import com.mhoch.githubuser.domain.dto.CommitDto;
 import com.mhoch.githubuser.domain.dto.OwnerDto;
 import com.mhoch.githubuser.domain.dto.RepositoryDto;
 import com.mhoch.githubuser.exceptions.ResourceNotFoundException;
 import com.mhoch.githubuser.service.GitRepositoryService;
-import com.mhoch.githubuser.service.ResponseService;
+import com.mhoch.githubuser.service.UserRepositoriesService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -63,12 +63,12 @@ public class ApplicationE2ETest {
         RestTemplate restTemplate = new RestTemplate();
 
         GitRepositoryService gitRepositoryService = new GitRepositoryService(restTemplate);
-        ResponseService responseService = new ResponseService(gitRepositoryService);
+        UserRepositoriesService userRepositoriesService = new UserRepositoriesService(gitRepositoryService);
 
-        Controller controller = new Controller(responseService);
+        UserRepositoriesController userRepositoriesController = new UserRepositoriesController(userRepositoriesService);
 
         mockServer = MockRestServiceServer.createServer(restTemplate);
-        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(userRepositoriesController).build();
 
         ReflectionTestUtils.setField(gitRepositoryService, "serviceUrl","https://api.github.com/");
     }

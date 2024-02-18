@@ -12,7 +12,7 @@ import java.util.Objects;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-class RestResponseExceptionHandlerTest {
+class RestUserRepositoriesResponseExceptionHandlerTest {
 
     @Test
     void userNotFoundException() {
