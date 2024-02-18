@@ -71,7 +71,7 @@ public class ApplicationE2ETest {
         mockServer = MockRestServiceServer.createServer(restTemplate);
         mockMvc = MockMvcBuilders.standaloneSetup(userRepositoriesController).build();
 
-        ReflectionTestUtils.setField(gitRepositoryService, "serviceUrl","https://api.github.com/");
+        ReflectionTestUtils.setField(gitRepositoryService, "serviceUrl","https://api.github.com");
     }
 
     @Test

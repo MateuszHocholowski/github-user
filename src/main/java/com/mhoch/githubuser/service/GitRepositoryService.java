@@ -28,7 +28,7 @@ public class GitRepositoryService {
 
         try {
             RepositoryDto[] repositoryDtos = restTemplate.getForObject(
-                    "%s users/%s/repos".formatted(serviceUrl,userLogin), RepositoryDto[].class);
+                    "%s/users/%s/repos".formatted(serviceUrl,userLogin), RepositoryDto[].class);
 
             if (repositoryDtos == null) {
                 return new ArrayList<>();
