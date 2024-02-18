@@ -9,7 +9,7 @@ Application returns JSON file with name and owner of all public repositories as 
 
 ## API Reference
 
-#### Get Github Repositories Data
+### Get Github Repositories Data
 
 ```http
   GET /
@@ -29,6 +29,7 @@ Takes Owner's username and returns data about github repositories.
   -H 'accept: */*'
 ```
 #### Response
+
 ```http
 {
   "repositories": [
@@ -44,4 +45,4 @@ Takes Owner's username and returns data about github repositories.
     }
   ]
 }
-````
+```
