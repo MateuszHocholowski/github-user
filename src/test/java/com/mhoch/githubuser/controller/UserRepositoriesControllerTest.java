@@ -1,9 +1,9 @@
 package com.mhoch.githubuser.controller;
 
 import com.mhoch.githubuser.domain.response.RepositoryResponse;
-import com.mhoch.githubuser.domain.response.Response;
+import com.mhoch.githubuser.domain.response.UserRepositoriesResponse;
 import com.mhoch.githubuser.exceptions.ResourceNotFoundException;
-import com.mhoch.githubuser.service.ResponseService;
+import com.mhoch.githubuser.service.UserRepositoriesService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,15 +26,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
-class ControllerTest {
+class UserRepositoriesControllerTest {
 
     private static final String REPOSITORY_NAME = "repositoryName";
     private static final String OWNER_LOGIN = "ownerLogin";
     private static final String ERROR_MESSAGE = "errorMessage";
     @Mock
-    ResponseService responseService;
+    UserRepositoriesService userRepositoriesService;
     @InjectMocks
-    Controller controller;
+    UserRepositoriesController controller;
 
     MockMvc mockMvc;
     @BeforeEach
@@ -51,10 +51,10 @@ class ControllerTest {
 
         List<String> expectedRepositoriesNames = List.of(REPOSITORY_NAME);
 
-        Response response = new Response();
-        response.setRepositories(List.of(repositoryResponse));
+        UserRepositoriesResponse userRepositoriesResponse = new UserRepositoriesResponse();
+        userRepositoriesResponse.setRepositories(List.of(repositoryResponse));
 
-        when(responseService.getResponse(anyString())).thenReturn(response);
+        when(userRepositoriesService.getUserRepositoriesData(anyString())).thenReturn(userRepositoriesResponse);
         //then
         mockMvc.perform(get("")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -69,7 +69,8 @@ class ControllerTest {
     @Test
     void tryToGetResponseFromUserThatIsNotInDb() throws Exception {
         //given
-        when(responseService.getResponse(anyString())).thenThrow(new ResourceNotFoundException(ERROR_MESSAGE));
+        when(userRepositoriesService.getUserRepositoriesData(anyString()))
+                .thenThrow(new ResourceNotFoundException(ERROR_MESSAGE));
         //then
         mockMvc.perform(get("")
                 .contentType(MediaType.APPLICATION_JSON)

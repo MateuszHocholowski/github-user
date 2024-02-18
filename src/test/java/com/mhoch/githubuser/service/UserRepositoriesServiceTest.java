@@ -6,7 +6,7 @@ import com.mhoch.githubuser.domain.dto.OwnerDto;
 import com.mhoch.githubuser.domain.dto.RepositoryDto;
 import com.mhoch.githubuser.domain.response.BranchResponse;
 import com.mhoch.githubuser.domain.response.RepositoryResponse;
-import com.mhoch.githubuser.domain.response.Response;
+import com.mhoch.githubuser.domain.response.UserRepositoriesResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,7 +23,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
-class ResponseServiceTest {
+class UserRepositoriesServiceTest {
 
     private static final String OWNER_LOGIN = "ownerLogin";
     private static final String REPOSITORY_NAME = "repositoryName";
@@ -38,10 +38,10 @@ class ResponseServiceTest {
     @Mock
     GitRepositoryService gitRepositoryService;
     @InjectMocks
-    ResponseService responseService;
+    UserRepositoriesService userRepositoriesService;
     @BeforeEach
     void setUp() {
-        responseService = new ResponseService(gitRepositoryService);
+        userRepositoriesService = new UserRepositoriesService(gitRepositoryService);
     }
 
     @Test
@@ -71,14 +71,14 @@ class ResponseServiceTest {
         when(gitRepositoryService.fetchUserRepositories(anyString())).thenReturn(repositoryDtos);
         when(gitRepositoryService.fetchRepositoryBranches(anyString())).thenReturn(branchDtoList);
         //when
-        Response response = responseService.getResponse(OWNER_LOGIN);
+        UserRepositoriesResponse userRepositoriesResponse = userRepositoriesService.getUserRepositoriesData(OWNER_LOGIN);
 
-        List<String> responseRepositoriesNames = response.getRepositories().stream()
+        List<String> responseRepositoriesNames = userRepositoriesResponse.getRepositories().stream()
                 .map(RepositoryResponse::getRepositoryName).toList();
-        List<String> responseRepositoryBranchesNames = response.getRepositories().get(0).getBranches()
+        List<String> responseRepositoryBranchesNames = userRepositoriesResponse.getRepositories().get(0).getBranches()
                 .stream().map(BranchResponse::getBranchName).toList();
         //then
-        assertEquals(OWNER_LOGIN, response.getRepositories().get(0).getOwnerLogin());
+        assertEquals(OWNER_LOGIN, userRepositoriesResponse.getRepositories().get(0).getOwnerLogin());
         assertThat(responseRepositoriesNames).containsExactlyInAnyOrderElementsOf(expectedRepositoriesNames);
         assertThat(responseRepositoryBranchesNames).containsExactlyInAnyOrderElementsOf(expectedBranchesNames);
     }
@@ -111,12 +111,12 @@ class ResponseServiceTest {
         when(gitRepositoryService.fetchRepositoryBranches(anyString())).thenReturn(branchDtoList);
         when(gitRepositoryService.fetchRepositoryBranches(URL_FOR_NO_BRANCHES)).thenReturn(new ArrayList<>());
         //when
-        Response response = responseService.getResponse(OWNER_LOGIN);
+        UserRepositoriesResponse userRepositoriesResponse = userRepositoriesService.getUserRepositoriesData(OWNER_LOGIN);
 
-        List<String> responseRepositoriesNames = response.getRepositories().stream()
+        List<String> responseRepositoriesNames = userRepositoriesResponse.getRepositories().stream()
                 .map(RepositoryResponse::getRepositoryName).toList();
 
-        RepositoryResponse repositoryResponseWithNoBranches = response.getRepositories().stream()
+        RepositoryResponse repositoryResponseWithNoBranches = userRepositoriesResponse.getRepositories().stream()
                 .filter(repositoryResponse -> repositoryResponse.getRepositoryName().equals(EMPTY_REPOSITORY))
                 .findFirst().orElse(new RepositoryResponse());
         //then
@@ -150,9 +150,9 @@ class ResponseServiceTest {
         when(gitRepositoryService.fetchUserRepositories(anyString())).thenReturn(repositoryDtos);
         when(gitRepositoryService.fetchRepositoryBranches(anyString())).thenReturn(branchDtoList);
         //when
-        Response response = responseService.getResponse(OWNER_LOGIN);
+        UserRepositoriesResponse userRepositoriesResponse = userRepositoriesService.getUserRepositoriesData(OWNER_LOGIN);
 
-        List<String> responseRepositoriesNames = response.getRepositories().stream()
+        List<String> responseRepositoriesNames = userRepositoriesResponse.getRepositories().stream()
                 .map(RepositoryResponse::getRepositoryName).toList();
         //then
         assertThat(responseRepositoriesNames).containsExactlyInAnyOrderElementsOf(expectedRepositoriesNames);
@@ -163,8 +163,8 @@ class ResponseServiceTest {
         //given
         when(gitRepositoryService.fetchUserRepositories(anyString())).thenReturn(new ArrayList<>());
         //when
-        Response response = responseService.getResponse(OWNER_LOGIN);
+        UserRepositoriesResponse userRepositoriesResponse = userRepositoriesService.getUserRepositoriesData(OWNER_LOGIN);
         //then
-        assertThat(response.getRepositories()).isEmpty();
+        assertThat(userRepositoriesResponse.getRepositories()).isEmpty();
     }
 }

@@ -7,6 +7,6 @@ import java.util.List;
 
 @Getter
 @Setter
-public class Response {
+public class UserRepositoriesResponse {
     private List<RepositoryResponse> repositories;
 }

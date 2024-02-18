@@ -2,36 +2,36 @@ package com.mhoch.githubuser.service;
 
 import com.mhoch.githubuser.domain.dto.BranchDto;
 import com.mhoch.githubuser.domain.dto.RepositoryDto;
-import com.mhoch.githubuser.domain.response.Response;
+import com.mhoch.githubuser.domain.response.UserRepositoriesResponse;
 import com.mhoch.githubuser.mappers.RepositoryResponseMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ResponseService {
+public class UserRepositoriesService {
 
     private final GitRepositoryService gitRepositoryService;
 
-    public ResponseService(GitRepositoryService gitRepositoryService) {
+    public UserRepositoriesService(GitRepositoryService gitRepositoryService) {
         this.gitRepositoryService = gitRepositoryService;
     }
 
-    public Response getResponse(String userLogin) {
+    public UserRepositoriesResponse getUserRepositoriesData(String userLogin) {
 
         List<RepositoryDto> repositories = gitRepositoryService.fetchUserRepositories(userLogin);
 
-        Response response = new Response();
+        UserRepositoriesResponse userRepositoriesResponse = new UserRepositoriesResponse();
 
-        response.setRepositories(repositories.stream()
+        userRepositoriesResponse.setRepositories(repositories.stream()
                 .filter(repository -> !repository.isFork())
                 .map(repository -> RepositoryResponseMapper
-                        .mapToRepositoryResponse(repository,getBranches(repository.getBranchesUrl())))
+                        .mapToRepositoryResponse(repository, getRepositoryBranches(repository.getBranchesUrl())))
                 .toList());
 
-        return response;
+        return userRepositoriesResponse;
     }
-    private List<BranchDto> getBranches(String branchesUrl) {
+    private List<BranchDto> getRepositoryBranches(String branchesUrl) {
         String url = branchesUrl.split("\\{")[0];
         return gitRepositoryService.fetchRepositoryBranches(url);
     }
