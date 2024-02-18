@@ -16,11 +16,12 @@ class RestUserRepositoriesResponseExceptionHandlerTest {
 
     @Test
     void userNotFoundException() {
+        //given
         RestResponseExceptionHandler handler = new RestResponseExceptionHandler();
         ResourceNotFoundException exception = new ResourceNotFoundException("message");
-
+        //when
         ResponseEntity<ErrorDto> response = handler.userNotFoundException(exception);
-
+        //then
         assertEquals("message", Objects.requireNonNull(response.getBody()).getMessage());
         assertEquals(HttpStatus.NOT_FOUND.toString(),response.getBody().getStatus());
     }

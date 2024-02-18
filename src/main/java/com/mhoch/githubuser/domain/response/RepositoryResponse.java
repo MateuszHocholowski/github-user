@@ -9,10 +9,13 @@ import java.util.List;
 @Getter
 @Setter
 public class RepositoryResponse {
+
     @JsonProperty("repository_name")
     private String repositoryName;
+
     @JsonProperty("owner")
     private String ownerLogin;
+
     @JsonProperty("branches")
     private List<BranchResponse> branches;
 }

@@ -24,10 +24,12 @@ class GitRepositoryServiceTest {
     private static final String NAME_2 = "name2";
     private static final String USER_LOGIN = "testLogin";
     private static final String BRANCH_URL = "testUrl";
+
     @Mock
     RestTemplate restTemplate;
     @InjectMocks
     GitRepositoryService gitRepositoryService;
+
     @BeforeEach
     void setUp() {
         gitRepositoryService = new GitRepositoryService(restTemplate);
@@ -39,10 +41,13 @@ class GitRepositoryServiceTest {
         RepositoryDto[] repositoryDtos = new RepositoryDto[2];
         repositoryDtos[0] = RepositoryDto.builder().name(NAME_1).build();
         repositoryDtos[1] = RepositoryDto.builder().name(NAME_2).build();
+
         List<String> expectedNames = List.of(NAME_1,NAME_2);
+
         when(restTemplate.getForObject(anyString(),any())).thenReturn(repositoryDtos);
         //when
         List<RepositoryDto> returnedRepositories = gitRepositoryService.fetchUserRepositories(USER_LOGIN);
+
         List<String> returnedRepositoriesNamesList = returnedRepositories.stream()
                 .map(RepositoryDto::getName).toList();
         //then
@@ -74,10 +79,13 @@ class GitRepositoryServiceTest {
         BranchDto[] branchDtos = new BranchDto[2];
         branchDtos[0] = BranchDto.builder().name(NAME_1).build();
         branchDtos[1] = BranchDto.builder().name(NAME_2).build();
+
         List<String> expectedNames = List.of(NAME_1,NAME_2);
+
         when(restTemplate.getForObject(anyString(),any())).thenReturn(branchDtos);
         //when
         List<BranchDto> returnedBranches = gitRepositoryService.fetchRepositoryBranches(BRANCH_URL);
+
         List<String> returnedBranchesNamesList = returnedBranches.stream()
                 .map(BranchDto::getName).toList();
         //then

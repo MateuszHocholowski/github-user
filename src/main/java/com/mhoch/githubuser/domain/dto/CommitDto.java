@@ -8,5 +8,6 @@ import lombok.Value;
 public class CommitDto {
 
     String sha;
+
     String url;
 }

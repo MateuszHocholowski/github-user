@@ -7,8 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BranchResponse {
+
     @JsonProperty("branch_name")
     private String branchName;
+
     @JsonProperty("last_commit_sha")
     private String lastCommitSha;
 }

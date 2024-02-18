@@ -9,6 +9,7 @@ import java.util.List;
 public class RepositoryResponseMapper {
 
     public static RepositoryResponse mapToRepositoryResponse(RepositoryDto repositoryDto, List<BranchDto> branchDtoList){
+
         if (repositoryDto == null) {
             return null;
         }

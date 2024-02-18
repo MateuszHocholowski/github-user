@@ -61,6 +61,7 @@ class UserRepositoriesServiceTest {
 
         RepositoryDto repositoryDto1 = RepositoryDto.builder().name(REPOSITORY_NAME)
                 .owner(ownerDto).branchesUrl(BRANCH_URL).isFork(false).build();
+
         RepositoryDto repositoryDto2 = RepositoryDto.builder().name(REPOSITORY_NAME2)
                 .owner(ownerDto).branchesUrl(BRANCH_URL).isFork(false).build();
 
@@ -69,12 +70,14 @@ class UserRepositoriesServiceTest {
         List<RepositoryDto> repositoryDtos = List.of(repositoryDto1, repositoryDto2);
 
         when(gitRepositoryService.fetchUserRepositories(anyString())).thenReturn(repositoryDtos);
+
         when(gitRepositoryService.fetchRepositoryBranches(anyString())).thenReturn(branchDtoList);
         //when
         UserRepositoriesResponse userRepositoriesResponse = userRepositoriesService.getUserRepositoriesData(OWNER_LOGIN);
 
         List<String> responseRepositoriesNames = userRepositoriesResponse.getRepositories().stream()
                 .map(RepositoryResponse::getRepositoryName).toList();
+
         List<String> responseRepositoryBranchesNames = userRepositoriesResponse.getRepositories().get(0).getBranches()
                 .stream().map(BranchResponse::getBranchName).toList();
         //then
@@ -140,6 +143,7 @@ class UserRepositoriesServiceTest {
 
         RepositoryDto repositoryDto1 = RepositoryDto.builder().name(REPOSITORY_NAME)
                 .owner(ownerDto).branchesUrl(BRANCH_URL).isFork(false).build();
+
         RepositoryDto repositoryDto2 = RepositoryDto.builder().name(FORKED_REPOSITORY)
                 .owner(ownerDto).branchesUrl(BRANCH_URL).isFork(true).build();
 

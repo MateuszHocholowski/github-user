@@ -25,14 +25,16 @@ public class UserRepositoriesService {
 
         userRepositoriesResponse.setRepositories(repositories.stream()
                 .filter(repository -> !repository.isFork())
-                .map(repository -> RepositoryResponseMapper
-                        .mapToRepositoryResponse(repository, getRepositoryBranches(repository.getBranchesUrl())))
+                .map(repository -> RepositoryResponseMapper.mapToRepositoryResponse(
+                        repository, getRepositoryBranches(repository.getBranchesUrl())))
                 .toList());
 
         return userRepositoriesResponse;
     }
     private List<BranchDto> getRepositoryBranches(String branchesUrl) {
+
         String url = branchesUrl.split("\\{")[0];
+
         return gitRepositoryService.fetchRepositoryBranches(url);
     }
 }
